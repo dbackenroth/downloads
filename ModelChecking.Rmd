@@ -1,0 +1,92 @@
+---
+title: "Model checking"
+author: "Daniel Backenroth"
+date: "9/6/2017"
+output: html_document
+fig_width: 10
+fig_height: 4
+---
+
+
+```{r, echo=F, message=F, warning=F}
+source("YearlyPatternsAnalysis.R")
+library(gridExtra)
+
+#test.form <- 'Activity ~ 0 + s(DaysFromStart, k=5, bs="mpi") + as.factor(Local_Weekday) + s(Local_DayNumber, k=20) + as.factor(WeekdayHoliday) + as.factor(Bridge)'
+
+```
+
+My model includes 
+
+1. a monotonically increasing smooth of day number from 1/1/2013, with 100 basis functions 
+2. a periodic smooth of day number within year, with 100 basis functions 
+3. a factor for day of the week 
+4. a factor for holidays that land on weekdays 
+5. a factor for bridge days (a Friday after a Thursday that is a holiday, or a Monday before a Tuesday that is a holiday).
+
+Another term I considered which I omitted, since it increased the AIC, was a factor for holidays that land on weekends.  
+
+I pulled national holidays for France from www.officeholidays.com/countries/france/2015.php etc...  This website could be scraped to get national holidays for any country.  
+
+Here is the model summary and a plot of the two smooth terms from this model.  
+
+```{r, fig.width=10, fig.height=3}
+Country <- "France"
+dat <- GetRegressionData(Country) %>% filter(Local_Year %in% 2013:2016)
+form1 <- 'Activity ~ s(DaysFromStart, k=5, bs="mpi") + as.factor(Local_Weekday) + as.factor(Local_Month) + as.factor(WeekdayHoliday) + as.factor(Bridge)'
+fit1 <- FitSaveOrLoad(file=paste0("scam/ModelFits/", Country, ".mod1.Rdata"), dat, form1)
+form2 <- 'Activity ~ s(DaysFromStart, k=100, bs="mpi") + as.factor(Local_Weekday) + s(Local_DayNumber, k=100, bs="cc") + as.factor(WeekdayHoliday) + as.factor(Bridge)'
+fit2 <- FitSaveOrLoad(file=paste0("scam/ModelFits/", Country, ".mod2.Rdata"), dat, form2)
+#form3 <- 'Activity ~ s(DaysFromStart, k=100, bs="mpi") + as.factor(Local_Weekday) + s(Local_DayNumber, k=100, bs="cc", by=Weekend) + as.factor(WeekdayHoliday) + as.factor(Bridge)'
+#fit3 <- FitSaveOrLoad(file=paste0("scam/ModelFits/", Country, ".mod3.Rdata"), dat, form3)
+form4 <- 'Activity ~ s(DaysFromStart, k=100) + as.factor(Local_Weekday) + s(Local_DayNumber, k=100, bs="cc") + as.factor(WeekdayHoliday) + as.factor(Bridge)'
+fit2 <- FitSaveOrLoad(file=paste0("scam/ModelFits/", Country, ".mod4.Rdata"), dat, form4)
+form5 <- 'Activity ~ s(DaysFromStart, k=100) + as.factor(Local_Weekday) + s(Local_DayNumber, k=100, bs="cc", by=as.factor(Local_Year)) + as.factor(WeekdayHoliday) + as.factor(Bridge)'
+fit2 <- FitSaveOrLoad(file=paste0("scam/ModelFits/", Country, ".mod5.Rdata"), dat, form5)
+
+summary(fit2)
+npterm <- NPTerm(fit2, dat)
+pterm <- PTerm(fit2, dat)
+PlotBothTerms(npterm, pterm)
+```
+
+Here is a plot of the periodic term where the positions of holidays (for 2013 through 2017) are overlaid with vertical lines.  
+
+```{r, fig.width=10, fig.height=3}
+hol.info <- ProcessHolidays(Country) %>% filter(Year==2014, Type=="holiday")
+print(hol.info[, c("Date", "Name")])
+holidays <- hol.info$Date
+fstring <- "%m/%d/%Y"
+holidays <- as.character(as.Date(holidays, format=fstring))
+p.plot <- ggplot(pterm, aes(x=as.Date(Date), y=Term)) + scale_x_date() + geom_line() + theme_bw() + xlab("Date") + ylab("Periodic term")
+p.plot + geom_vline(xintercept=as.numeric(as.Date(holidays)))
+```
+
+Here is a comparison of predicted against observed values for this model.  
+
+```{r, fig.width=10, fig.height=3}
+df <- data.frame(Predicted=GetPredictions(dat, fit2), 
+                 Observed=dat$Activity, 
+                 Date=dat$date, 
+                 Weekday=dat$Local_Weekday)
+ggplot(df, aes(x=Observed, y=Predicted)) + geom_point() + theme_bw()
+```
+
+Some outliers are due to RStudio issues, maybe server outages.  September 22 and 23, for example, are not weekend days, but the files I downloaded for those days from RStudio are about 10-20% as big as they should be.  
+
+Here is a plot of the predictor on the linear predictor scale.  The two rows of predictions correspond to weekdays and to weekends/holidays, respectively.  
+
+```{r, fig.width=10, fig.height=3}
+link <- predict(fit2, newdata=dat, type="link", se.fit=T)
+df <- data.frame(Predicted=link$fit, 
+                 Date=npterm$Date)
+ggplot(df, aes(x=as.Date(Date), y=Predicted)) + geom_point() + theme_bw() + xlab("Date")
+```
+
+Here is a plot of the logarithm of observed activity.  
+
+```{r, fig.width=10, fig.height=3}
+df <- data.frame(Observed=log(dat$Activity), 
+                 Date=npterm$Date)
+ggplot(df, aes(x=as.Date(Date), y=Observed)) + geom_point() + theme_bw() + xlab("Date")
+```

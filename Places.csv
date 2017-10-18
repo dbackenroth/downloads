@@ -1,0 +1,101 @@
+Country_Name,S,Time.Zone,Country_Name_Fixed,Country_Name_Holidays,OneTimeZone,Selected,CountryCode
+Argentina,86513,America/Buenos_Aires,Argentina,Argentina,TRUE,TRUE,AR
+Australia,516229,Australia/Melbourne,Australia,Australia,FALSE,TRUE,AU
+Austria,139976,Europe/Vienna,Austria,Austria,TRUE,TRUE,AT
+Belgium,164698,Europe/Brussels,Belgium,Belgium,TRUE,TRUE,BE
+Brazil,485073,America/Sao_Paulo,Brazil,Brazil,FALSE,TRUE,BR
+Canada,648981,America/Toronto,Canada,Canada,FALSE,TRUE,CA
+Chile,84946,America/Santiago,Chile,Chile,TRUE,TRUE,CL
+China,1645092,Asia/Chongqing,China,China,TRUE,TRUE,CN
+Colombia,202764,America/Bogota,Colombia,Colombia,TRUE,TRUE,CO
+Costa Rica,37050,America/Costa_Rica,Costa_Rica,Costa_Rica,TRUE,TRUE,CR
+Czech Republic,78591,Europe/Prague,Czech_Republic,Czech_Republic,TRUE,TRUE,CZ
+Denmark,152449,Europe/Copenhagen,Denmark,Denmark,TRUE,TRUE,DK
+Ecuador,38436,America/Guayaquil,Ecuador,Ecuador,TRUE,TRUE,EC
+Egypt,20096,Africa/Cairo,Egypt,Egypt,TRUE,FALSE,EG
+Estonia,20549,Europe/Tallinn,Estonia,Estonia,TRUE,FALSE,EE
+Finland,93640,Europe/Helsinki,Finland,Finland,TRUE,TRUE,FI
+France,738496,Europe/Paris,France,France,TRUE,TRUE,FR
+Germany,1531153,Europe/Berlin,Germany,Germany,TRUE,TRUE,DE
+Greece,67954,Europe/Athens,Greece,Greece,TRUE,TRUE,GR
+Hong Kong,371002,Asia/Hong_Kong,Hong_Kong,Hong_Kong,TRUE,TRUE,HK
+Hungary,46989,Europe/Budapest,Hungary,Hungary,TRUE,TRUE,HU
+India,1078520,Asia/Calcutta,India,India,TRUE,TRUE,IN
+Indonesia,69534,Asia/Jakarta,Indonesia,Indonesia,FALSE,TRUE,ID
+Iran (Islamic Republic of),43273,Asia/Tehran,Iran,Iran,TRUE,TRUE,IR
+Ireland,99178,Europe/Dublin,Ireland,Ireland,TRUE,TRUE,IE
+Israel,88414,Asia/Tel_Aviv,Israel,Israel,TRUE,TRUE,IL
+Italy,306777,Europe/Rome,Italy,Italy,TRUE,TRUE,IT
+Japan,556253,Asia/Tokyo,Japan,Japan,TRUE,TRUE,JP
+Kenya,27931,Africa/Nairobi,Kenya,Kenya,TRUE,FALSE,KE
+Lithuania,23911,Europe/Vilnius,Lithuania,Lithuania,TRUE,FALSE,LT
+Malaysia,53867,Asia/Kuala_Lumpur,Malaysia,Malaysia,TRUE,TRUE,MY
+Mexico,222860,America/Mexico_City,Mexico,Mexico,FALSE,TRUE,MX
+Netherlands,456553,Europe/Amsterdam,Netherlands,Netherlands,TRUE,TRUE,NL
+New Zealand,88810,Pacific/Auckland,New_Zealand,New_Zealand,TRUE,TRUE,NZ
+Norway,87834,Europe/Oslo,Norway,Norway,TRUE,TRUE,NO
+Pakistan,28967,Asia/Karachi,Pakistan,Pakistan,TRUE,FALSE,PK
+Peru,63546,America/Lima,Peru,Peru,TRUE,TRUE,PE
+Philippines,35121,Asia/Manila,Philippines,Philippines,TRUE,TRUE,PH
+Poland,199536,Europe/Warsaw,Poland,Poland,TRUE,TRUE,PL
+Portugal,77863,Europe/Lisbon,Portugal,Portugal,TRUE,TRUE,PT
+Republic of Korea,648776,Asia/Seoul,South_Korea,South_Korea,TRUE,TRUE,KR
+Romania,45671,Europe/Bucharest,Romania,Romania,TRUE,TRUE,RO
+Russian Federation,202623,Europe/Moscow,Russia,Russia,FALSE,TRUE,RU
+Singapore,150856,Asia/Singapore,Singapore,Singapore,TRUE,TRUE,SG
+Slovakia,19516,Europe/Bratislava,Slovakia,Slovakia,TRUE,FALSE,SK
+Slovenia,22229,Europe/Ljubljana,Slovenia,Slovenia,TRUE,FALSE,SI
+South Africa,90834,Africa/Johannesburg,South_Africa,South_Africa,TRUE,TRUE,ZA
+Spain,520055,Europe/Madrid,Spain,Spain,TRUE,TRUE,ES
+Sweden,151659,Europe/Stockholm,Sweden,Sweden,TRUE,TRUE,SE
+Switzerland,378680,Europe/Zurich,Switzerland,Switzerland,TRUE,TRUE,CH
+"Taiwan, Province of China",342480,Asia/Taipei,Taiwan,Taiwan,TRUE,TRUE,TW
+Thailand,59531,Asia/Bangkok,Thailand,Thailand,TRUE,TRUE,TH
+Tunisia,20872,Africa/Tunis,Tunisia,Tunisia,TRUE,FALSE,TN
+Turkey,85311,Asia/Istanbul,Turkey,Turkey,TRUE,TRUE,TR
+Ukraine,46130,Europe/Kiev,Ukraine,Ukraine,TRUE,TRUE,UA
+United Kingdom of Great Britain and Northern Ireland,1245691,Europe/London,UK,UK,TRUE,TRUE,GB
+United States of America,7913899,America/New_York,USA,USA,FALSE,TRUE,US
+"Venezuela, Bolivarian Republic of",21935,America/Caracas,Venezuela,Venezuela,TRUE,FALSE,VE
+Viet Nam,82632,Asia/Ho_Chi_Minh,Vietnam,Vietnam,TRUE,TRUE,VN
+Croatia,,Europe/Zagreb,Croatia,Croatia,TRUE,FALSE,HR
+Serbia,,Europe/Belgrade,Serbia,Serbia,TRUE,FALSE,RS
+Nigeria,,Africa/Lagos,Nigeria,Nigeria,TRUE,FALSE,NG
+United Arab Emirates,,Asia/Dubai,UAE,UAE,TRUE,FALSE,AE
+Morocco,,Africa/Casablanca,Morocco,Morocco,TRUE,FALSE,MA
+Uruguay,,America/Montevideo,Uruguay,Uruguay,TRUE,FALSE,UY
+Saudi Arabia,,Asia/Riyadh,Saudi_Arabia,Saudi_Arabia,TRUE,FALSE,SA
+Belarus,,Europe/Minsk,Belarus,Belarus,TRUE,FALSE,BY
+Bulgaria,,Europe/Sofia,Bulgaria,Bulgaria,TRUE,FALSE,BG
+Iceland,,Atlantic/Reykjavik,Iceland,Iceland,TRUE,FALSE,IS
+Ghana,,Africa/Accra,Ghana,Ghana,TRUE,FALSE,GH
+Sri Lanka,,Asia/Colombo,Sri_Lanka,Sri_Lanka,TRUE,FALSE,LK
+Puerto Rico,,America/Puerto_Rico,Puerto_Rico,NA,TRUE,FALSE,PR
+Senegal,,Africa/Dakar,Senegal,NA,TRUE,FALSE,SN
+Luxembourg,,Europe/Luxembourg,Luxembourg,Luxembourg,TRUE,FALSE,LU
+Bangladesh,,Asia/Dacca,Bangladesh,Bangladesh,TRUE,FALSE,BD
+Latvia,,Europe/Riga,Latvia,Latvia,TRUE,FALSE,LV
+Nepal,,Asia/Kathmandu,Nepal,NA,TRUE,FALSE,NP
+Guatemala,,America/Guatemala,Guatemala,NA,TRUE,FALSE,GT
+Ethiopia,,Africa/Addis_Ababa,Ethiopia,Ethiopia,TRUE,FALSE,ET
+Dominican Republic,,America/Santo_Domingo,Dominican_Republic,Dominican_Republic,TRUE,FALSE,DO
+Bolivia (Plurinational State of),,America/La_Paz,Bolivia,Bolivia,TRUE,FALSE,BO
+Cyprus,,Europe/Nicosia,Cyprus,Cyprus,TRUE,FALSE,CY
+Uganda,,Africa/Kampala,Uganda,Uganda,TRUE,FALSE,UG
+United Republic of Tanzania,,Africa/Dar_es_Salaam,Tanzania,Tanzania,TRUE,FALSE,TZ
+El Salvador,,America/El_Salvador,El_Salvador,El_Salvador,TRUE,FALSE,SV
+Mauritius,,Indian/Mauritius,Mauritius,Mauritius,TRUE,FALSE,MU
+Cameroon,,Africa/Lagos,Cameroon,NA,TRUE,FALSE,CM
+Algeria,,Africa/Algiers,Algeria,Algeria,TRUE,FALSE,DZ
+Macao,,Asia/Macao,Macao,Macau,TRUE,FALSE,MO
+Burkina Faso,,Africa/Ouagadougou,Burkina_Faso,NA,TRUE,FALSE,BF
+Qatar,,Asia/Qatar,Qatar,Qatar,TRUE,FALSE,QA
+Lebanon,,Asia/Beirut,Lebanon,Lebanon,TRUE,FALSE,LB
+Kazakhstan,,Asia/Almaty,Kazakhstan,Kazakhstan,TRUE,FALSE,KZ
+Benin,,Africa/Porto-Novo,Benin,NA,TRUE,FALSE,BJ
+Panama,,America/Panama,Panama,Panama,TRUE,FALSE,PA
+Ivory Coast,,Africa/Abidjan,Ivory_Coast,NA,TRUE,FALSE,CI
+Armenia,,Asia/Yerevan,Armenia,Armenia,TRUE,FALSE,AM
+Jordan,,Asia/Amman,Jordan,Jordan,TRUE,FALSE,JO
+Malta,,Europe/Malta,Malta,Malta,TRUE,FALSE,MT
+Zimbabwe,,Africa/Harare,Zimbabwe,Zimbabwe,TRUE,FALSE,ZW

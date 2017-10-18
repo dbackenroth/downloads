@@ -1,0 +1,132 @@
+---
+title: "Plots"
+author: "Daniel Backenroth"
+date: "October 12, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+These are the first two lines of the first download log from http://cran.rstudio.com, from October 1, 2012.  Two packages were downloaded by an R user from Australia (country code AU); the package quadprog is imported by lavaan, a package for fitting latent variable models.  Every day RStudio assigns a unique IP ID to each user and provides that ID along with geocoding information.  
+
+```{r firstfile, echo=F, message=F, warning=F}
+source("SelectCountries.R")
+library(printr)
+head(FirstDownloadFile(), 2)
+```
+
+Here is a plot showing the total number of downloads, across all the logs, for each country.  Each day was divided into 10 minute periods, and only one download was counted for each user for each such period (to avoid high totals resulting from downloading a package with dependencies).  Only downloads from users where the r_version was available were counted (this removed some artefacts that looked spurious); for Germany, all downloads of RcppArmadillo were excluded because of many spurious RcppArmadillo downloads in Germany.  
+```{r totalsplot, echo=F, message=F, warning=F, fig.width=8, results="hide"}
+PlotCountrySums()
+```
+
+Here are the five countries with the most downloads (only including downloads of R packages from RStudio; download logs from other repositories are not available).  
+
+```{r, echo=F, message=F, warning=F}
+country_sum <- fread("Data/CountrySums.csv")
+head(country_sum[, c("Country_Name", "Number")], 5)
+```
+
+Here are the five countries (or territories) with the least downloads.  
+
+```{r, echo=F, message=F, warning=F}
+tail(country_sum[, c("Country_Name", "Number")], 5)
+```
+
+The 50 countries with the most downloads were selected and are used for further analysis.
+
+```{r, echo=F, message=F, warning=F, results="hide"}
+PlotSelectedCountries()
+```
+
+For each of these models I fit a simple model to the daily download totals.  I treated the totals as gamma distributed (I added 0.1 to days with no downloads); all the model parameters are on the log scale.  The model has a factor term for day of the week, a monotonically increasing smooth term (with 50 basis functions) for day since October 1, 2012 and through August 11, 2017, and a smooth periodic term (with 100 basis functions) for day of the year.  
+
+Here is a plot of the daily download totals for the US versus the model predictions, separately for weekdays and weekends.  
+
+```{r, echo=F, message=F, warning=F, results="hide", fig.width=10}
+source("PlotModel.R")
+PlotDataAndPredictions(country="USA", type="complex2")
+```
+
+Here is a heatmap showing the day of the week effects for each country.  Monday is the reference day.  Most countries share a profile, characterized by work on Monday-Friday and a weekend on Saturday and Sunday.  Some countries have bigger differences in work between week and weekend than others (Western European and Anglo countries have big differences).  
+
+```{r, echo=F, message=F, warning=F, results="hide", fig.width=10}
+source("NewUtilities.R")
+weekday.effects <- read.csv("scam/ModelFits/WeekdayEffects.csv")
+Heatmap(weekday.effects, "Weekday", days)
+```
+
+Here is a plot showing the distance of the day of week work profiles, compared to that of the USA.  The USA is most similar to Canada and Mexico, and more different from countries in South America, Asia and the former Eastern Bloc (where there is more work on weekends) and from some of the Western European countries (where there is less work on weekends).  
+
+```{r, echo=F, message=F, results="hide", fig.width=10}
+weekday.effects <- read.csv("scam/ModelFits/WeekdayEffects.csv")
+spr.week <- spread(weekday.effects, Country, Effect) %>% select(-Weekday)
+dists <- as.data.frame(as.matrix(dist(t(spr.week)))["USA", ])
+colnames(dists) <- "Dist"
+dists$Country_Name_Fixed <- rownames(dists)
+PlotMap(dists, "Dist", "Distance of weekday profiles from USA's")
+```
+
+Here is a plot of the smooth day of year term, exponentiated, for the USA, for 2016.  Holidays are indicated.  The quantity being plotted is the ratio of work normally being done at that time of year compared to average, over the course of the whole year.  
+
+```{r, echo=F, message=F, results="hide", fig.width=10, warning=F}
+source("PlotModel.R")
+PlotSmoothTerm("USA", type="complex2")
+```
+
+Here is the same thing for France.  The French take a bigger summer break than the Americans, but also work harder during December than Americans (some of this may have to do with school calendars).  
+```{r, echo=F, message=F, results="hide", fig.width=10, warning=F}
+PlotSmoothTerm("France", type="complex2")
+```
+
+Here is the same thing for Australia.  
+
+```{r, echo=F, message=F, results="hide", fig.width=10, warning=F}
+PlotSmoothTerm("Australia", type="complex2")
+```
+
+And China.
+
+```{r, echo=F, message=F, results="hide", fig.width=10, warning=F}
+PlotSmoothTerm("China", type="complex2")
+```
+
+Here is a multi-dimensional scaling plot, showing the similarity of these smooth day of year terms for the 50 selected countries.  There's a cluster of Southern Hemisphere countries, a cluster of East Asian countries, and a cluster of European countries, the US and Canada.  
+
+```{r, echo=F, message=F, results="hide", fig.width=10, warning=F}
+seas <- read.csv("scam/ModelFits/DayOfYearEffects.csv")
+seas.spr <- spread(seas, Country, Effect) %>% select(-Local_DayNumber)
+tseas <- t(seas.spr)
+cc <- cmdscale(dist(tseas), k=2) %>% as.data.frame()
+colnames(cc) <- c("X", "Y")
+cc$Country <- gsub("_", " ", rownames(cc))
+library(ggrepel)
+p <- ggplot(cc, aes(x=X, y=Y, label=Country)) + 
+    geom_text_repel(size=3) + 
+    geom_point(color="red") + theme_bw() + xlab("") + ylab("")
+print(p)
+```
+
+Here is a plot showing the distance of the day of week work profiles, compared to that of the USA. The USA is most similar to Canada, the UK and some of the Scandinavian countries.  
+
+```{r, echo=F, message=F, results="hide", fig.width=10}
+dists <- as.data.frame(as.matrix(dist(tseas))["USA", ])
+colnames(dists) <- "Dist"
+dists$Country_Name_Fixed <- rownames(dists)
+PlotMap(dists, "Dist", "Distance of day of year profiles from USA's")
+```
+
+We can also look at the distribution of downloads over the course of the day, to see at what times people are working and at what time they are eating lunch, etc...  Here is this distribution for several European countries, averaged over the working days of Monday, Tuesday, Wednesday and Thursday.  The middle of the lunch hour is indicated; the middle of the lunch hour in Finland is at 11:50 AM; in Spain it is at 2:30 PM.  
+
+```{r, echo=F, message=F, results="hide", fig.width=10}
+source("DailyPatternsAnalysis.R")
+PlotEuropeanLunchTimes()
+```
+
+Western Europeans tend to work less at night than some others.  Here is a plot of distributions comparing France with some other countries.  Hong Kong in particular has an unusual distribution of work time.  In China and Vietnam it seems that many people return to work after dinner.  In spite of its size, China has one time zone.  
+
+```{r, echo=F, message=F, results="hide", fig.width=10}
+PlotAsians()
+```
